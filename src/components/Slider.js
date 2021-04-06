@@ -69,13 +69,13 @@ const Slider = () => {
     const handleTouchMove = (e) => {
         setTouchEnd(e.targetTouches[0].clientX);
         let delta = touchStart - touchEnd
-        if (delta > 70 && translate < commonSlidesWidth) {
+        if (delta > 70) {
             setState({
                 ...state,
                 translate: delta + activeSlideIndex * oneSlideWidth,
             })
         }
-        else if (delta < -70 && translate <= commonSlidesWidth && translate !== 0) {
+        else if (delta < -70) {
             setState({
                 ...state,
                 translate: delta + activeSlideIndex * oneSlideWidth,
@@ -84,14 +84,14 @@ const Slider = () => {
     }
 
     const handleTouchEnd = () => {
-        if (touchStart - touchEnd > 100 && translate < commonSlidesWidth) {
+        if (touchStart - touchEnd > 100) {
             setState({
                 ...state,
                 translate: (activeSlideIndex + 1) * oneSlideWidth,
                 activeSlideIndex: activeSlideIndex === slides.length - 1 ? 0 : activeSlideIndex + 1
             })
         }
-        else if (touchStart - touchEnd < -100 && translate <= commonSlidesWidth && translate !== 0) {
+        else if (touchStart - touchEnd < -100) {
             setState({
                 ...state,
                 translate: (activeSlideIndex - 1) * oneSlideWidth,
