@@ -84,14 +84,14 @@ const Slider = () => {
     }
 
     const handleTouchEnd = () => {
-        if (touchStart - touchEnd > 100) {
+        if (touchStart - touchEnd > 40) {
             setState({
                 ...state,
                 translate: (activeSlideIndex + 1) * oneSlideWidth,
                 activeSlideIndex: activeSlideIndex === slides.length - 1 ? 0 : activeSlideIndex + 1
             })
         }
-        else if (touchStart - touchEnd < -100) {
+        else if (touchStart - touchEnd < -40) {
             setState({
                 ...state,
                 translate: (activeSlideIndex - 1) * oneSlideWidth,
