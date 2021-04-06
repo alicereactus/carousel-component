@@ -32,7 +32,6 @@ const Slider = () => {
             setState({
                 ...state,
                 translate: 0,
-                transition: 0.40,
                 activeSlideIndex: activeSlideIndex === slides.length - 1 ? 0 : activeSlideIndex + 1
             })
         }
@@ -50,7 +49,6 @@ const Slider = () => {
             setState({
                 ...state,
                 translate: commonSlidesWidth,
-                transition: 0.40,
                 activeSlideIndex: activeSlideIndex === 0 ? slides.length - 1 : activeSlideIndex - 1
             })
         }
@@ -70,20 +68,33 @@ const Slider = () => {
 
     const handleTouchMove = (e) => {
         setTouchEnd(e.targetTouches[0].clientX);
+        let delta = touchStart - touchEnd
+        if (delta > 70 && translate < commonSlidesWidth) {
+            setState({
+                ...state,
+                translate: delta + activeSlideIndex * oneSlideWidth,
+            })
+        }
+        else if (delta < -70 && translate <= commonSlidesWidth && translate !== 0) {
+            setState({
+                ...state,
+                translate: delta + activeSlideIndex * oneSlideWidth,
+            })
+        }
     }
 
     const handleTouchEnd = () => {
-        if (touchStart - touchEnd > 50 && translate < commonSlidesWidth) {
+        if (touchStart - touchEnd > 100 && translate < commonSlidesWidth) {
             setState({
                 ...state,
-                translate: translate + oneSlideWidth,
+                translate: (activeSlideIndex + 1) * oneSlideWidth,
                 activeSlideIndex: activeSlideIndex === slides.length - 1 ? 0 : activeSlideIndex + 1
             })
         }
-        else if (touchStart - touchEnd < -50 && translate <= commonSlidesWidth && translate !== 0) {
+        else if (touchStart - touchEnd < -100 && translate <= commonSlidesWidth && translate !== 0) {
             setState({
                 ...state,
-                translate: translate - oneSlideWidth,
+                translate: (activeSlideIndex - 1) * oneSlideWidth,
                 activeSlideIndex: activeSlideIndex === 0 ? slides.length - 1 : activeSlideIndex - 1
             })
         }
